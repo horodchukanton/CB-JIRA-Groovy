@@ -1,0 +1,52 @@
+pluginInfo:
+  pluginName: CB-JIRA-Groovy
+  description: some description
+  version: 1.0.0
+  metafile:
+    commander-version: 8.3
+
+configuration:
+  checkConnection: true
+  parameters:
+    -
+      name: configParameter
+      label: Configuration parameter
+      required: false
+      type: entry
+      htmlDocumentation: Additional parameter example
+      documentation: Additional parameter example
+  shell: ec-perl
+  restConfigInfo:
+    endpointDescription: Link to the JIRA site
+    endpointLabel: REST Endpoint
+    headers: {Accept: "application/json"}
+    authSchemes:
+      basic:
+        userNameLabel: User Name
+        passwordLabel: Password
+        description: Please provide username and password to use for the connection
+        credentialLabel: Basic credential
+        checkConnectionUri: /rest/api/2/mypermissions?os_authType=basic
+      anonymous:
+        checkConnectionUri: /rest/api/2/mypermissions?os_authType=any
+  # If set to true, a boilerplate script for check connection will be generated, otherwize a generic connection check will be used.
+  # Is used in conjunction with type and authSchemes parameters.
+  customCheckConnection: false
+  # If set to true, a field for Debug Level will be generated in the configuration.
+  hasDebugLevel: true
+  # If set to true, a set of fields for the Proxy support will be generated
+  hasProxySupport: true
+
+procedures:
+  - name: GetIssues
+    description: Sample procedure description
+    hasConfig: true
+    parameters:
+      - name: jiraIdentifier
+        description: ID or the JQL query for of the issues to retrieve.
+        type: entry
+        required: true
+        label: Issue ID
+    outputParameters:
+      issueIds: Ids of the retrieved issues.
+    shell: ec-groovy
