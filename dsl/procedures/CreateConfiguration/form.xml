@@ -40,18 +40,44 @@
       <name>Basic</name>
       <value>basic</value>
     </option>
+    <option>
+      <name>OAuth 1.0</name>
+      <value>oauth1</value>
+    </option>
   </formElement>
   <formElement>
     <type>credential</type>
     <property>basic_credential</property>
     <required>0</required>
-    <htmlDocumentation>Please provide username and password to use for the connection</htmlDocumentation>
-    <label>Basic credential:</label>
+    <htmlDocumentation>Please provide username and password/token to use for the connection.</htmlDocumentation>
+    <label>Basic/Token credential:</label>
     <attachedAsParameterToStep>createConfiguration,checkConnectionGeneric</attachedAsParameterToStep>
     <condition>${authScheme} == "basic"</condition>
     <dependsOn>authScheme</dependsOn>
-    <passwordLabel>Password</passwordLabel>
+    <passwordLabel>Password/Token</passwordLabel>
     <userNameLabel>User Name</userNameLabel>
+  </formElement>
+  <formElement>
+    <type>entry</type>
+    <property>oauth1ConsumerKey</property>
+    <required>0</required>
+    <htmlDocumentation>Consumer key is name of your OAuth configuration</htmlDocumentation>
+    <label>Consumer Key:</label>
+    <condition>${authScheme} == "oauth1"</condition>
+    <dependsOn>authScheme</dependsOn>
+  </formElement>
+  <formElement>
+    <type>credential</type>
+    <property>oauth1_credential</property>
+    <required>0</required>
+    <htmlDocumentation>Specify your RSA private key in the password field ( in a single line ) in a PEM or DER format.</htmlDocumentation>
+    <documentation>Specify your RSA private key in the password field ( in a single line ) in a PEM or DER format.</documentation>
+    <label>OAuth Credential:</label>
+    <attachedAsParameterToStep>createConfiguration,checkConnectionGeneric</attachedAsParameterToStep>
+    <condition>${authScheme} == "oauth1"</condition>
+    <credentialType>key</credentialType>
+    <dependsOn>authScheme</dependsOn>
+    <userNameLabel>OAuth Token</userNameLabel>
   </formElement>
   <formElement>
     <type>entry</type>

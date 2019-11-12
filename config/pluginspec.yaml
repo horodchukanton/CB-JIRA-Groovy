@@ -19,22 +19,24 @@ configuration:
   restConfigInfo:
     endpointDescription: Link to the JIRA site
     endpointLabel: REST Endpoint
+    checkConnectionUri: /rest/api/2/mypermissions
     headers: {Accept: "application/json"}
     authSchemes:
+      oauth1:
+        consumerKeyLabel: Consumer Key
+        consumerKeyDescription: Consumer key is name of your OAuth configuration
+        credentialLabel: OAuth Credential
+        tokenLabel: OAuth Token
+        tokenDescription: Specify your RSA private key in the password field ( in a single line ) in a PEM or DER format.
       basic:
         userNameLabel: User Name
-        passwordLabel: Password
-        description: Please provide username and password to use for the connection
-        credentialLabel: Basic credential
-        checkConnectionUri: /rest/api/2/mypermissions?os_authType=basic
+        passwordLabel: Password/Token
+        description: Please provide username and password/token to use for the connection.
+        credentialLabel: Basic/Token credential
       anonymous:
-        checkConnectionUri: /rest/api/2/mypermissions?os_authType=any
-  # If set to true, a boilerplate script for check connection will be generated, otherwize a generic connection check will be used.
-  # Is used in conjunction with type and authSchemes parameters.
+        checkConnectionUri: /rest/api/2/mypermissions
   customCheckConnection: false
-  # If set to true, a field for Debug Level will be generated in the configuration.
   hasDebugLevel: true
-  # If set to true, a set of fields for the Proxy support will be generated
   hasProxySupport: true
 
 procedures:

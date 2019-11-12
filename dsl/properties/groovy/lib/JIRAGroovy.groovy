@@ -1,4 +1,5 @@
 import com.electriccloud.flowpdf.Context
+import com.electriccloud.flowpdf.FlowAPI
 import com.electriccloud.flowpdf.FlowPlugin
 import com.electriccloud.flowpdf.StepParameters
 import com.electriccloud.flowpdf.StepResult
@@ -17,6 +18,14 @@ class JIRAGroovy extends FlowPlugin {
                 pluginVersion      : '@PLUGIN_VERSION@',
                 configFields       : ['config'],
                 configLocations    : ['ec_plugin_cfgs'],
+                oauth              : [
+                        request_method        : 'POST',
+                        oauth_signature_method: 'RSA-SHA1',
+                        oauth_version         : '1.0',
+                        request_token_path    : 'plugins/servlet/oauth/request-token',
+                        authorize_token_path  : 'plugins/servlet/oauth/authorize',
+                        access_token_path     : 'plugins/servlet/oauth/access-token',
+                ],
                 defaultConfigValues: [:]
         ]
     }
@@ -29,6 +38,7 @@ class JIRAGroovy extends FlowPlugin {
  */
     def getIssues(StepParameters runtimeParameters, StepResult sr) {
 
+
         /* Log is automatically available from the parent class */
         log.info(
                 "getIssues was invoked with StepParameters",
@@ -36,15 +46,13 @@ class JIRAGroovy extends FlowPlugin {
                 runtimeParameters.toString()
         )
 
-        Context context = getContext()
-        REST rest = context.newRESTClient()
-
         String issueIdentifier = runtimeParameters.getRequiredParameter('jiraIdentifier').getValue()
         String jql
         // issue ID(s)
         if (issueIdentifier =~ /^[A-Za-z]+-[0-9]$/
                 || issueIdentifier =~ /^((?:[A-Za-z]+-[0-9]), ?)+(?:[A-Za-z]+-[0-9])$/) {
-            jql = "ID IN (${issueIdentifier})"
+            def identifiers = issueIdentifier.split(/, ?/)
+            jql = "ID IN (${identifiers.collect({ it -> return "'${it}'" }).join(',')})"
         } else { //JQL
             jql = issueIdentifier
         }
@@ -52,7 +60,7 @@ class JIRAGroovy extends FlowPlugin {
         def requestParams = [
                 method: 'GET',
                 path  : '/rest/api/2/search',
-                query : ['search': jql]
+                query : ['search': jql, fields: 'summary,comment']
         ]
 
         def issues = retrieveChunkedResults(requestParams)
@@ -84,7 +92,7 @@ class JIRAGroovy extends FlowPlugin {
         options['maxResults'] = options['maxResults'] ?: 50
 
         // Initializing the client and the request
-        def restClient = context.newRESTClient()
+        def restClient = getContext().newRESTClient()
         def request = restClient.newRequest(requestParameters)
 
         // Applying options to the request
