@@ -1,9 +1,9 @@
-import com.electriccloud.flowpdf.Context
-import com.electriccloud.flowpdf.FlowAPI
-import com.electriccloud.flowpdf.FlowPlugin
-import com.electriccloud.flowpdf.StepParameters
-import com.electriccloud.flowpdf.StepResult
-import com.electriccloud.flowpdf.client.REST
+import com.cloudbees.flowpdf.Context
+import com.cloudbees.flowpdf.FlowAPI
+import com.cloudbees.flowpdf.FlowPlugin
+import com.cloudbees.flowpdf.StepParameters
+import com.cloudbees.flowpdf.StepResult
+import com.cloudbees.flowpdf.client.REST
 import groovy.json.JsonOutput
 
 /**

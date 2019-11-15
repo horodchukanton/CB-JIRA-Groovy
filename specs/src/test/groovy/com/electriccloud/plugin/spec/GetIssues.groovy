@@ -45,6 +45,7 @@ class GetIssues extends PluginTestHelper {
 
 
     @Sanity
+    @Unroll
     def "#caseId. GetIssues simple"() {
         given:
 
@@ -67,15 +68,15 @@ class GetIssues extends PluginTestHelper {
         assert resultProperty
         def resultKeys = resultProperty.split(/, ?/)
 
-        for (String key : keys){
+        for (String key : keys) {
             assert resultKeys.contains(key)
         }
 
 
         where:
-        caseId       | config      | issueId                      | keys
-        'CHANGEME_1' | CONFIG_NAME | 'TEST-6'                     | ['TEST-6']
-        'CHANGEME_2' | CONFIG_NAME | 'TEST-6, TEST-8'             | ['TEST-6', 'TEST-8']
-        'CHANGEME_3' | CONFIG_NAME | 'ID IN ("TEST-6", "TEST-8")' | ['TEST-6', 'TEST-8']
+        caseId | config      | issueId                      | keys
+        '1'    | CONFIG_NAME | 'TEST-6'                     | ['TEST-6']
+        '2'    | CONFIG_NAME | 'TEST-6, TEST-8'             | ['TEST-6', 'TEST-8']
+        '3'    | CONFIG_NAME | 'ID IN ("TEST-6", "TEST-8")' | ['TEST-6', 'TEST-8']
     }
 }
