@@ -14,18 +14,17 @@ procedure 'GetIssues', description: '''Sample procedure description''', {
     step 'GetIssues', {
         description = ''
         command = new File(pluginDir, "dsl/procedures/GetIssues/steps/GetIssues.groovy").text
-        // TODO altered shell
         shell = 'ec-groovy'
         shell = 'ec-groovy -cp $[/myJob/flowpdk_classpath]'
 
         resourceName = '$[/myJob/flowpdkResource]'
 
-        postProcessor = ''''''
+        postProcessor = '''$[/myProject/perl/postpLoader]'''
     }
 
     formalOutputParameter 'issueIds',
         description: 'Ids of the retrieved issues.'
-// DO NOT EDIT THIS BLOCK === procedure_autogen ends, checksum: d05b7ac0a3d54e33246dee6c5b3f12f1 ===
+// DO NOT EDIT THIS BLOCK === procedure_autogen ends, checksum: c18686c9c3a5ded7825fd4137b6d9048 ===
 // Do not update the code above the line
 // procedure properties declaration can be placed in here, like
 // property 'property name', value: "value"

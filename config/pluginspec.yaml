@@ -8,14 +8,12 @@ pluginInfo:
 configuration:
   checkConnection: true
   parameters:
-    -
-      name: configParameter
+    - name: configParameter
       label: Configuration parameter
       required: false
       type: entry
       htmlDocumentation: Additional parameter example
       documentation: Additional parameter example
-  shell: ec-perl
   restConfigInfo:
     endpointDescription: Link to the JIRA site
     endpointLabel: REST Endpoint

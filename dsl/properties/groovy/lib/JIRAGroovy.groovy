@@ -37,7 +37,9 @@ class JIRAGroovy extends FlowPlugin {
  * @param jiraIdentifier (required: true)
  */
     def getIssues(StepParameters runtimeParameters, StepResult sr) {
-
+        log.infoDiag("Info diag")
+        log.warnDiag("Warn diag")
+        log.errorDiag("Error diag")
 
         /* Log is automatically available from the parent class */
         log.info(
@@ -80,7 +82,7 @@ class JIRAGroovy extends FlowPlugin {
         sr.setOutputParameter('issueIds', issueKeys)
 
         sr.apply()
-        log.info("step GetIssues has been finished")
+        log.infoDiag("step GetIssues has been finished")
     }
 
 // === step ends ===
